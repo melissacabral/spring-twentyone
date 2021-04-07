@@ -6,6 +6,9 @@
 			wp_list_categories( array(
 				'title_li' 		=> '',
 				'show_count' 	=> true,
+				'number' 		=> 10,
+				'orderby' 		=> 'count',
+				'order' 		=> 'DESC'
 			) ); 
 			?>
 		</ul>
@@ -14,7 +17,7 @@
 		<h3 class="widget-title"> Archives </h3>
 		<ul>
 			<?php wp_get_archives( array(
-				'type' => 'monthly',
+				'type' 	=> 'yearly',
 			) ); ?>
 		</ul>
 	</section>
@@ -22,10 +25,12 @@
 		<h3 class="widget-title"> Tags </h3>
 
 		<?php wp_tag_cloud( array(
-			'format' => 'list', //default flat
-			'largest' => 1,
+			'format' 	=> 'list', //default flat
+			'largest' 	=> 1,
 			'smallest'	=> 1,
-			'unit' => 'em',
+			'unit' 		=> 'em',
+			'number' 	=> 10,
+			'order' 	=> 'RAND'
 		) ); ?>
 	</section>
 	<section id="meta" class="widget">

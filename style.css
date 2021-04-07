@@ -543,6 +543,16 @@ img {
     background-color: #E7452A;
     color:white;
 }
+/*navigation automatically has "current" markers*/
+
+.navigation .current_page_item a{
+    background-color: tomato;
+    color:white;
+}
+.current-cat > a, [aria-current]{
+    background-color:#eee;
+}
+
 /*
 == Search bar
 */
@@ -635,6 +645,13 @@ img {
   display: inline;
   padding: 0;
   margin:0;
+}
+
+/* example post class - sticky post */
+
+.sticky{
+    background-color:#FFF9D6;
+    padding:1em;
 }
 /* 
 == WordPress Core
@@ -965,29 +982,3 @@ check for browsers that support grid
         }
     }
 }/*end css grid support requiement*/
-
-
-/*examples of using body class*/
-
-.blog{
-    background-color:#F9E1A2;
-}
-
-/* example post class - sticky post */
-
-.sticky{
-    background-color:#FDFF5D;
-    padding:1em;
-}
-
-/*navigation automatically has "current" markers*/
-
-.current_page_item a{
-    background-color: tomato;
-}
-.current-cat > a{
-    background-color:yellow;
-}
-[aria-current]{
-    background-color: aqua;
-}
