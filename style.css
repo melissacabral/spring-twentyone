@@ -505,12 +505,17 @@ img {
     text-transform: uppercase;
     letter-spacing: normal;
 }
+.custom-logo-link img{
+	max-width:100px;
+	height:auto;
+}
+
 
 /*
 == navigation menu
 */
 .navigation{
-    background-color:rgba(255,255,255,.4);
+    background-color:rgba(255,255,255,.8);
 }
 .navigation ul{
     list-style-type: none;
@@ -549,7 +554,7 @@ img {
     background-color: tomato;
     color:white;
 }
-.current-cat > a, [aria-current]{
+.current-cat > a{
     background-color:#eee;
 }
 
