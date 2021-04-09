@@ -20,6 +20,12 @@
 					//conditional tag example
 					if( is_singular() ){
 						the_content();
+						//for 'paged' posts
+						wp_link_pages( array(
+							'before' => '<div class="paged-post-nav">Keep reading this post:<br>',
+							'after' => '</div>',
+							'next_or_number' => 'next,'
+						) );
 					}else{
 						//not a single post or page (archive)
 						the_excerpt();
@@ -36,10 +42,13 @@
 			</article>
 			<!-- end .post -->
 
-			<?php comments_template(); ?>
+			<?php //comments_template(); ?>
 
 			<?php 
 				} //end while
+
+				mmc_pagination();
+
 			}else{ ?>
 
 				<h2>No Posts to show</h2>

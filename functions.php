@@ -2,6 +2,8 @@
 /**
  * Activate sleeping features 
  */
+add_theme_support( 'jetpack-social-menu' );
+
 add_theme_support('post-thumbnails');
 
 add_theme_support('custom-background');
@@ -76,9 +78,41 @@ function mmc_admin_footer(){
 	return 'New footer text';
 }
 
+/**
+ * Activate any menu areas we need
+ */
+add_action('init', 'mmc_menu_areas');
+function mmc_menu_areas(){
+	register_nav_menus( array(
+		'main_menu' => 'Main Navigation',
+		//replaced social menu with jetpack's solution
+		//'social_menu' => 'Social Menu',
+		'footer_menu' => 'Footer Menu',
+	) );
+}
 
+/**
+ * Display pagination on any template
+ * detects mobile devices and shows simplified next/previous pagination
+ */
+function mmc_pagination(){
+	echo '<div class="pagination">';
+	if( is_singular() ){
+		//singular next/prev post
+		previous_post_link('%link', '&larr;Previously: %title');
+		next_post_link('%link', 'Next: %title &rarr;');
 
+	}elseif( wp_is_mobile() ){
+		//archive next/prev
+		previous_posts_link();
+		next_posts_link();
 
+	}else{
+		//numbered pagination for desktop
+		the_posts_pagination();
+	}
+	echo '</div>';
+}
 
 
 

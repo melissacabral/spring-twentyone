@@ -32,6 +32,9 @@
 
 			<?php 
 				} //end while
+
+				mmc_pagination();
+				
 			}else{ ?>
 
 				<h2>No Posts to show</h2>

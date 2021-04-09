@@ -49,18 +49,18 @@
 				<h2><?php bloginfo( 'description' ); ?></h2>
 			</div>
 			<div class="navigation">
-				<nav class="main-menu">
-					<ul>
-						<?php 
-						wp_list_pages( array(
-							'title_li' => '',
-						) ); 
-						?>
-					</ul>
-				</nav>
+				<?php 
+				//display a menu area we registered in functions.php
+				wp_nav_menu( array(
+					'theme_location' 	=> 'main_menu',
+					'container' 		=> 'nav',
+					'container_class' 	=> 'menu',
+					'menu_class' 		=> '',
+					'menu_id' 			=> 'main-navigation-menu',
+				) ); ?>
 			</div>
 			<div class="utilities">
-				<!-- Utility menu will go here -->
+				<?php if ( function_exists( 'jetpack_social_menu' ) ) jetpack_social_menu(); ?>
 			</div>
 			<?php get_search_form(); ?>
 
