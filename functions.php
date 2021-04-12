@@ -85,8 +85,7 @@ add_action('init', 'mmc_menu_areas');
 function mmc_menu_areas(){
 	register_nav_menus( array(
 		'main_menu' => 'Main Navigation',
-		//replaced social menu with jetpack's solution
-		//'social_menu' => 'Social Menu',
+		'social_menu' => 'Social Menu',
 		'footer_menu' => 'Footer Menu',
 	) );
 }
@@ -99,7 +98,7 @@ function mmc_pagination(){
 	echo '<div class="pagination">';
 	if( is_singular() ){
 		//singular next/prev post
-		previous_post_link('%link', '&larr;Previously: %title');
+		previous_post_link('%link', '&larr; Previously: %title');
 		next_post_link('%link', 'Next: %title &rarr;');
 
 	}elseif( wp_is_mobile() ){
@@ -115,7 +114,39 @@ function mmc_pagination(){
 }
 
 
-
+/**
+ * Register any needed widget areas (dynamic sidebars)
+ */
+add_action( 'widgets_init', 'mmc_widget_areas' );
+function mmc_widget_areas(){
+	register_sidebar( array(
+		'name' 			=> 'Blog Sidebar',
+		'id' 			=> 'blog-sidebar',
+		'description' 	=> 'Appears on screens that show blog posts',
+		'before_widget' => '<section class="widget %2$s" id="%1$s">',
+		'after_widget' 	=> '</section>',
+		'before_title' 	=> '<h3 class="widget-title">',
+		'after_title'	=> '</h3>',
+	) );
+	register_sidebar( array(
+		'name' 			=> 'Page Sidebar',
+		'id' 			=> 'page-sidebar',
+		'description' 	=> 'Appears on 2-column pages',
+		'before_widget' => '<section class="widget %2$s" id="%1$s">',
+		'after_widget' 	=> '</section>',
+		'before_title' 	=> '<h3 class="widget-title">',
+		'after_title'	=> '</h3>',
+	) );
+	register_sidebar( array(
+		'name' 			=> 'Footer Area',
+		'id' 			=> 'footer-area',
+		'description' 	=> 'Appears at the bottom of every screen',
+		'before_widget' => '<section class="widget %2$s" id="%1$s">',
+		'after_widget' 	=> '</section>',
+		'before_title' 	=> '<h3 class="widget-title">',
+		'after_title'	=> '</h3>',
+	) );
+}//end widget areas function
 
 
 

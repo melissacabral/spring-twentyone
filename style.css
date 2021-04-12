@@ -788,6 +788,18 @@ a img.aligncenter {
 .page .sidebar .widget{
     max-width: none;
 }
+
+/*
+== sidebar widgets
+ */
+.sidebar .gallery{
+    display:flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+.gallery-columns-3 .gallery-item{
+    max-width:33%;
+}
 /* 
 == Footer
 */
@@ -986,4 +998,4 @@ check for browsers that support grid
             left:80%;
         }
     }
-}/*end css grid support requiement*/
+}/*end css grid support requiement

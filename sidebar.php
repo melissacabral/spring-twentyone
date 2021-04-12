@@ -1,4 +1,7 @@
 <aside class="sidebar">
+	<?php 
+	//if no widgets, show fallback HTML
+	if( ! dynamic_sidebar('blog-sidebar') ){ ?>
 	<section id="categories" class="widget">
 		<h3 class="widget-title"> Categories </h3>
 		<ul>
@@ -40,5 +43,6 @@
 			<li><?php wp_loginout(); ?></li>
 		</ul>
 	</section>
+<?php } //end if no widgets ?>
 </aside>
 		<!-- end .sidebar -->
