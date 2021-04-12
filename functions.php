@@ -38,11 +38,16 @@ add_image_size('tiny', 60, 60, true);
 /**
  * Load all styles and scripts
  */
-function mmc_styles(){
+function mmc_scripts(){
 	//					nickname 		src of file
 	wp_enqueue_style( 'theme-style', get_stylesheet_uri() );
+
+	//improve comment replies (thiss script is built-in)
+	if( is_singular() AND comments_open() AND get_option('thread_comments') ){
+		wp_enqueue_script( 'comment-reply' );
+	}
 }
-add_action( 'wp_enqueue_scripts', 'mmc_styles' );
+add_action( 'wp_enqueue_scripts', 'mmc_scripts' );
 
 /**
  * Filter Hook example - change the excerpt length
@@ -147,6 +152,51 @@ function mmc_widget_areas(){
 		'after_title'	=> '</h3>',
 	) );
 }//end widget areas function
+
+/**
+ * Fix the default comment count so it excludes pingbacks and trackbacks
+ */
+add_filter( 'get_comments_number', 'mmc_comment_count' );
+function mmc_comment_count(){
+	//post_id
+	global $id;
+	$comments = get_approved_comments( $id );
+	$count = 0;
+	foreach( $comments as $comment ){
+		//if it's a real comment, count it
+		if( $comment->comment_type == 'comment' ){
+			$count ++;
+		}
+	}
+	return $count;
+}
+
+/**
+ * Count the number of pingbacks and trackbacks on any post
+ */
+function mmc_pings_count(){
+	global $id;
+	$comments = get_approved_comments( $id );
+	$count = 0;
+	foreach( $comments as $comment ){
+		//if it's not a real comment, count it
+		if( $comment->comment_type != 'comment' ){
+			$count ++;
+		}
+	}
+	return $count;
+}
+
+/**
+ * Remove the "website" field from the comment form
+ * @source https://www.wpbeginner.com/plugins/how-to-remove-website-url-field-from-wordpress-comment-form/
+ */
+add_filter('comment_form_default_fields', 'mmc_unset_url_field');
+function mmc_unset_url_field($fields){
+    if(isset($fields['url']))
+       unset($fields['url']);
+       return $fields;
+}
 
 
 

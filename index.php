@@ -42,7 +42,7 @@
 			</article>
 			<!-- end .post -->
 
-			<?php //comments_template(); ?>
+			<?php comments_template(); //requires comments.php ?>
 
 			<?php 
 				} //end while
