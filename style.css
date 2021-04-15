@@ -550,7 +550,7 @@ img {
 }
 /*navigation automatically has "current" markers*/
 
-.navigation .current_page_item a{
+.navigation .current-menu-item a{
     background-color: tomato;
     color:white;
 }
