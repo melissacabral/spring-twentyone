@@ -61,6 +61,8 @@
 			</div>
 			<div class="utilities">
 				<?php if ( function_exists( 'jetpack_social_menu' ) ) jetpack_social_menu(); ?>
+
+				<a class="cart-customlocation" href="<?php echo wc_get_cart_url(); ?>" title="<?php _e( 'View your shopping cart' ); ?>"><?php echo sprintf ( _n( '%d item', '%d items', WC()->cart->get_cart_contents_count() ), WC()->cart->get_cart_contents_count() ); ?> – <?php echo WC()->cart->get_cart_total(); ?></a>
 			</div>
 			<?php get_search_form(); ?>
 

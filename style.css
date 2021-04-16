@@ -609,6 +609,7 @@ img {
 == Main Content Area 
 */
 .content{
+    width:100%;
     max-width:60em;
     margin:0 auto;
 }
@@ -943,7 +944,8 @@ check for browsers that support grid
         .post-type-archive-work .site,
         .tax-work_category .site,
         .single-work .site,
-        .home.page .site{
+        .home.page .site,
+        .page-template-custom-one-column .site{
             grid-template-columns:   1fr;
             grid-template-areas:    
             "header"
@@ -999,3 +1001,18 @@ check for browsers that support grid
         }
     }
 }/*end css grid support requiement
+
+/*
+== WooCommerce additions
+ */
+
+.woocommerce .cart-collaterals .cart_totals, .woocommerce-page .cart-collaterals .cart_totals{
+ width:auto;
+}
+
+.woocommerce #respond input#submit.alt, .woocommerce a.button.alt, .woocommerce button.button.alt, .woocommerce input.button.alt{
+    background-color:tomato;
+}
+.woocommerce .widget_price_filter .ui-slider .ui-slider-range, .woocommerce .widget_price_filter .ui-slider .ui-slider-handle{
+     background-color:tomato;
+}

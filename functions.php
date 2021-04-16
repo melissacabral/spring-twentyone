@@ -134,6 +134,15 @@ function mmc_widget_areas(){
 		'after_title'	=> '</h3>',
 	) );
 	register_sidebar( array(
+		'name' 			=> 'Shop Sidebar',
+		'id' 			=> 'shop-sidebar',
+		'description' 	=> 'Appears on shop and single product pages',
+		'before_widget' => '<section class="widget %2$s" id="%1$s">',
+		'after_widget' 	=> '</section>',
+		'before_title' 	=> '<h3 class="widget-title">',
+		'after_title'	=> '</h3>',
+	) );
+	register_sidebar( array(
 		'name' 			=> 'Page Sidebar',
 		'id' 			=> 'page-sidebar',
 		'description' 	=> 'Appears on 2-column pages',
@@ -198,6 +207,74 @@ function mmc_unset_url_field($fields){
        return $fields;
 }
 
+/**
+ * WooCommerce theme support
+ */
+add_action('after_setup_theme', 'mmc_woo_support');
+function mmc_woo_support(){
+	add_theme_support('woocommerce');
+	add_theme_support( 'wc-product-gallery-zoom' );
+	add_theme_support( 'wc-product-gallery-lightbox' );
+	add_theme_support( 'wc-product-gallery-slider' );
+}
+
+//Fix the content wrappers (<main class="content">)
+remove_action( 'woocommerce_before_main_content', 'woocommerce_output_content_wrapper', 10);
+remove_action( 'woocommerce_after_main_content', 'woocommerce_output_content_wrapper_end', 10);
+
+add_action('woocommerce_before_main_content', 'mmc_wrapper_start', 10);
+add_action('woocommerce_after_main_content', 'mmc_wrapper_end', 10);
+
+function mmc_wrapper_start() {
+  echo '<main class="content">';
+}
+
+function mmc_wrapper_end() {
+  echo '</main>';
+}
 
 
+/**
+ * Add Ajax to the cart total in our header.php
+ * Show cart contents / total Ajax
+ * @source  https://docs.woocommerce.com/document/show-cart-contents-total/ 
+ */
+add_filter( 'woocommerce_add_to_cart_fragments', 'woocommerce_header_add_to_cart_fragment' );
+
+function woocommerce_header_add_to_cart_fragment( $fragments ) {
+	global $woocommerce;
+
+	ob_start();
+
+	?>
+	<a class="cart-customlocation" href="<?php echo esc_url(wc_get_cart_url()); ?>" title="<?php _e('View your shopping cart', 'woothemes'); ?>"><?php echo sprintf(_n('%d item', '%d items', $woocommerce->cart->cart_contents_count, 'woothemes'), $woocommerce->cart->cart_contents_count);?> – <?php echo $woocommerce->cart->get_cart_total(); ?></a>
+	<?php
+	$fragments['a.cart-customlocation'] = ob_get_clean();
+	return $fragments;
+}
+
+//remove all woocommerce
+//add_filter( 'woocommerce_enqueue_styles', '__return_empty_array' );
+//
+/**
+ * Set WooCommerce image dimensions upon theme activation
+ */
+// Remove each style one by one
+add_filter( 'woocommerce_enqueue_styles', 'mmc_dequeue_styles' );
+function mmc_dequeue_styles( $enqueue_styles ) {
+	//unset( $enqueue_styles['woocommerce-general'] );	// Remove the gloss
+	//unset( $enqueue_styles['woocommerce-layout'] );		// Remove the layout
+	//unset( $enqueue_styles['woocommerce-smallscreen'] );	// Remove the smallscreen optimisation
+	return $enqueue_styles;
+}
+
+/**
+ * Example of controlling Woo output with hooks
+ */
+add_action('after_setup_theme', 'mmc_remove_hooks');
+function mmc_remove_hooks(){
+	remove_action( 'woocommerce_single_product_summary', 'woocommerce_template_single_price', 10 );
+}
+
+add_action( 'woocommerce_single_product_summary', 'woocommerce_template_single_price', 1);
 //no close PHP
