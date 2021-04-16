@@ -6,6 +6,7 @@
 			</h1>
 
 			<ul class="portfolio-subnav">
+				<li><a href="<?php echo get_post_type_archive_link( 'work' ); ?>">Show all work</a></li>
 				<?php //show all terms in our custom taxonomy
 				wp_list_categories( array(
 					'title_li' 	=> '',

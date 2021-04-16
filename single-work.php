@@ -16,6 +16,8 @@
 							<?php the_title(); ?>
 						</h2>
 						<h3><?php the_field('role'); ?> - <?php the_field('year'); ?></h3>
+
+						<?php the_terms( $id, 'work_category', '<h4>', ', ', '</h4>' ); ?>
 					</div>
 				</div>
 				<div class="entry-content">
