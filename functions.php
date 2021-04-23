@@ -1,4 +1,5 @@
 <?php
+if ( ! isset( $content_width ) ) $content_width = 700;
 /**
  * Activate sleeping features 
  */
@@ -7,6 +8,8 @@ add_theme_support( 'jetpack-social-menu' );
 add_theme_support('post-thumbnails');
 
 add_theme_support('custom-background');
+
+add_theme_support( 'automatic-feed-links' );
 
 //custom header arguments
 $args = array(
@@ -247,7 +250,7 @@ function woocommerce_header_add_to_cart_fragment( $fragments ) {
 	ob_start();
 
 	?>
-	<a class="cart-customlocation" href="<?php echo esc_url(wc_get_cart_url()); ?>" title="<?php _e('View your shopping cart', 'woothemes'); ?>"><?php echo sprintf(_n('%d item', '%d items', $woocommerce->cart->cart_contents_count, 'woothemes'), $woocommerce->cart->cart_contents_count);?> – <?php echo $woocommerce->cart->get_cart_total(); ?></a>
+	<a class="cart-customlocation" href="<?php echo esc_url(wc_get_cart_url()); ?>" title="<?php _e('View your shopping cart', 'spring-twentyone'); ?>"><?php echo sprintf(_n('%d item', '%d items', $woocommerce->cart->cart_contents_count, 'spring-twentyone'), $woocommerce->cart->cart_contents_count);?> – <?php echo $woocommerce->cart->get_cart_total(); ?></a>
 	<?php
 	$fragments['a.cart-customlocation'] = ob_get_clean();
 	return $fragments;
@@ -278,3 +281,100 @@ function mmc_remove_hooks(){
 
 add_action( 'woocommerce_single_product_summary', 'woocommerce_template_single_price', 1);
 //no close PHP
+
+/**
+ * Customization API Examples
+ */
+add_action('customize_register', 'mmc_customize');
+function mmc_customize( $wp_customize ){
+	//header background color - use the existing 'colors' section
+	$wp_customize->add_setting( 'mmc_header_bg_color', array(
+		'default' => '#DDDDDD',
+		'sanitize_callback' => 'wp_strip_all_tags',
+	) );
+	//user interface for header color
+	$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'mmc_header_bg_color_ui', array(
+		'label' => 'Header Background Color',
+		'section' => 'colors', //built-in
+		'settings' => 'mmc_header_bg_color', //the setting from above
+	) ) );
+
+	//Typography section - google font choices
+	$wp_customize->add_section( 'mmc_typography', array(
+		'title' 		=> 'Typography',
+		'capability'	=> 'edit_theme_options',
+		'priority'		=> 50,
+	) );
+
+	//heading font option
+	$wp_customize->add_setting( 'mmc_heading_font', array(
+		'default' => 'Roboto Slab',
+		'sanitize_callback' => 'wp_strip_all_tags',
+	) );
+	$wp_customize->add_control( new WP_Customize_Control( $wp_customize, 'mmc_heading_font_ui', array(
+		'label'		=> 'Heading Font',
+		'section'	=> 'mmc_typography',
+		'settings'	=> 'mmc_heading_font',
+		'type' 		=> 'radio',
+		'choices'	=> array(
+							// data 		=> admin panel label
+							'Roboto Slab' 	=> 'Roboto Slab - Default Medium Serif',
+							'Orelega One'	=> 'Orelega One - Chunky Serifs',
+							'Zen Dots'		=> 'Zen Dots - Extended futuristic sans-serif',
+							'Langar'		=> 'Langar - Handwriting-ish',
+						),
+	) ) );
+
+	//Color Schemes example
+	$wp_customize->add_setting( 'mmc_color_scheme', array(
+		'default' => 'light',
+		'sanitize_callback' => 'wp_strip_all_tags',
+	) );
+	$wp_customize->add_control( new WP_Customize_Control( $wp_customize, 'mmc_color_scheme_ui', array(
+		'label' 	=> 'Color Scheme',
+		'section' 	=> 'colors',
+		'settings'	=> 'mmc_color_scheme',
+		'type' 		=> 'radio',
+		'priority' 	=>	5,
+		'choices'	=> array(
+			'light' 	=> 'Light Color Scheme',
+			'dark' 		=> 'Dark Color Scheme',
+		),
+	) ) );
+}
+
+/**
+ * Customizer CSS
+ */
+add_action('wp_head', 'mmc_customize_css');
+function mmc_customize_css(){
+	?>
+	<style>
+		.header{
+			background-color:<?php echo esc_html(get_theme_mod('mmc_header_bg_color')); ?>;
+		}
+
+		h1{
+			font-family: <?php echo esc_html(get_theme_mod('mmc_heading_font')); ?>, Arial, sans-serif;
+		}
+	</style>
+	<?php
+}
+
+/**
+ * Enqueue the chosen google font stylesheet
+ */
+add_action('wp_enqueue_scripts', 'mmc_custom_stylesheets');
+function mmc_custom_stylesheets(){
+	//Google Font Stuff
+	$font = urlencode( get_theme_mod('mmc_heading_font') );
+	$font_url = "https://fonts.googleapis.com/css2?family=$font&display=swap";
+
+	wp_enqueue_style('custom_header_font', $font_url);
+
+	//Color Scheme Stuff
+	$filename = get_theme_mod('mmc_color_scheme');
+	$colors_url = get_template_directory_uri() . "/color-schemes/$filename.css";
+
+	wp_enqueue_style( 'custom_color_scheme', $colors_url );
+}

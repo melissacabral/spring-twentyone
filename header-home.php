@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en-us">
+<html <?php language_attributes(); ?>>
 <head>
   <?php wp_head(); //HOOK. required for the admin bar and plugins to work ?>
 	<meta charset="utf-8">
@@ -33,6 +33,7 @@
 	</style>
 </head>
 <body <?php body_class(); ?>>
+	<?php wp_body_open(); ?>
 	<div class="site">
 		<header class="header hero">
 			<div class="branding">
@@ -42,7 +43,7 @@
 
 
 				<h1 class="site-title">
-					<a href="<?php echo home_url(); ?>">
+					<a href="<?php echo esc_url(home_url()); ?>">
 						<?php bloginfo( 'name' ); ?>
 					</a>
 				</h1>

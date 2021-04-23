@@ -7,7 +7,11 @@ Author URI:
 Version: 0.1
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.en.html
-Tags: Grid Layout, Portfolio, Blog, E-Commerce
+Tags: Portfolio, Blog, E-Commerce
+Text Domain: spring-twentyone
+Tested up to: 5.7.1
+Requires PHP: 7.4
+
 
 ------------------
 TABLE OF CONTENTS
@@ -659,6 +663,17 @@ img {
     background-color:#FFF9D6;
     padding:1em;
 }
+
+.gallery{
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+}
+/*theme check requirement*/
+.gallery-caption{
+	color:#4C4C4C;
+	font-size:.9em;
+}
 /* 
 == WordPress Core
 -------------------------------------------------------------- 
@@ -877,6 +892,10 @@ span.current.page-numbers{
 }
 .comments ol{
     list-style-type: none;
+}
+/*theme check requirement*/
+.bypostauthor{
+	background-color: #eee;
 }
 /* 
 == CSS Grid 

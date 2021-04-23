@@ -2,7 +2,10 @@
 		<main class="content">
 
 			<h1 class="page-heading">
-				My Work
+				<?php 
+				//learn more about i18n: 
+				//https://codex.wordpress.org/I18n_for_WordPress_Developers
+				_e('My Work', 'spring-twentyone'); ?>
 			</h1>
 
 			<ul class="portfolio-subnav">

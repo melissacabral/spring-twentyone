@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en-us">
+<html <?php language_attributes(); ?>>
 <head>
   <?php wp_head(); //HOOK. required for the admin bar and plugins to work ?>
 	<meta charset="utf-8">
@@ -33,6 +33,7 @@
 	</style>
 </head>
 <body <?php body_class(); ?>>
+	<?php wp_body_open(); ?>
 	<div class="site">
 		<header class="header">
 			<div class="branding">
@@ -42,7 +43,7 @@
 
 
 				<h1 class="site-title">
-					<a href="<?php echo home_url(); ?>">
+					<a href="<?php echo esc_url(home_url()); ?>">
 						<?php bloginfo( 'name' ); ?>
 					</a>
 				</h1>
@@ -62,7 +63,9 @@
 			<div class="utilities">
 				<?php if ( function_exists( 'jetpack_social_menu' ) ) jetpack_social_menu(); ?>
 
-				<a class="cart-customlocation" href="<?php echo wc_get_cart_url(); ?>" title="<?php _e( 'View your shopping cart' ); ?>"><?php echo sprintf ( _n( '%d item', '%d items', WC()->cart->get_cart_contents_count() ), WC()->cart->get_cart_contents_count() ); ?> – <?php echo WC()->cart->get_cart_total(); ?></a>
+				<a class="cart-customlocation" href="<?php echo wc_get_cart_url(); ?>" title="<?php 
+					_e( 'View your shopping cart', 'spring-twentyone' ); 
+				?>"><?php echo sprintf ( _n( '%d item', '%d items', WC()->cart->get_cart_contents_count() , 'spring-twentyone'), WC()->cart->get_cart_contents_count() ); ?> – <?php echo WC()->cart->get_cart_total(); ?></a>
 			</div>
 			<?php get_search_form(); ?>
 
