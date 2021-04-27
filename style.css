@@ -663,16 +663,42 @@ img {
     background-color:#FFF9D6;
     padding:1em;
 }
-
-.gallery{
-	display: flex;
-	flex-wrap: wrap;
-	justify-content: space-between;
+/* 
+== Gallery
+*/
+.gallery figure{
+    margin:0;
+    padding:0;
 }
+.gallery, .grid{
+	display: flex;
+    gap:2%;
+    flex-wrap: wrap;
+	justify-content: flex-start;
+}
+.gallery-columns-5 > *{
+    width:18%;
+}
+.gallery > *{
+    width:23%;
+}
+.gallery-columns-3 > *{
+    width:31%;
+}
+.gallery-columns-2 > *{
+    width:48%;
+}
+.gallery-columns-1 > *{
+    width:98%;
+}
+
+
 /*theme check requirement*/
 .gallery-caption{
 	color:#4C4C4C;
 	font-size:.9em;
+    padding:0 .5em 2em;
+
 }
 /* 
 == WordPress Core

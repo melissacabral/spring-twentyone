@@ -378,3 +378,21 @@ function mmc_custom_stylesheets(){
 
 	wp_enqueue_style( 'custom_color_scheme', $colors_url );
 }
+
+/**
+ * Example of customizing the main query
+ * change the search results
+ */
+//add_action('pre_get_posts', 'mmc_modify_query' );
+
+function mmc_modify_query( $query ){
+	//change behavior of search results query
+	if( is_search() AND $query->is_main_query() ){
+		$query->set('posts_per_page', 20);
+		$query->set('post_type', 'product');
+	}
+	//change behavior of blog query
+	if( is_home() AND $query->is_main_query() ){
+		$query->set('author__not_in', array(1));
+	}
+}
